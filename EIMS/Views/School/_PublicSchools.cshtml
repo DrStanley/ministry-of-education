@@ -1,0 +1,58 @@
+﻿@model IEnumerable<SchoolViewModel>
+@{
+    var count = 0;
+}
+<div class="table-responsive">
+    <table id="data-tablePub" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>School code</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Local Government</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <!--Tab 1-->
+        <tbody class="tab-pane active">
+            @foreach (var school in Model.Where(s=>s.Type==SchoolType.PUBLIC))
+            {
+
+                <tr>
+                    <td>
+                        <span class="w-100 text-center">@(++count)</span>
+                    </td>
+                    <td>
+                        <span>@school.SchoolName</span>
+                    </td>
+                    <td>@school.Email</td>
+                    <td>@school.SchoolCode</td>
+                    <td>@school.CategoryName</td>
+                    <td>@school.Type.ToString()</td>
+                    <td>@school.Status.ToString()</td>
+                    <td>@(school.LgaName ?? "None")</td>
+
+                    <td>
+                        <div class='dropdown dropstart'>
+                            <button class='btn btn-light btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                <i class='uil uil-ellipsis-v'></i>
+                            </button>
+                            <div class='dropdown-menu'>
+                                <a class='dropdown-item text-primary' href='@Url.Action("EditSchool", new {id = school.Id})'><i class='uil uil-pen'></i> Edit</a>
+                                <a class='dropdown-item text-warning' href='@Url.Action("ChangeSchoolStatus", new {id = school.Id})'><i class='uil uil-unlock'></i> @(school.Status==Status.Active ? "Deactivate" : "Activate")</a>
+                                <a class='dropdown-item text-danger' href='@Url.Action("RemoveSchool", new {id = school.Id})'><i class='uil uil-trash-alt'></i> Delete school</a>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

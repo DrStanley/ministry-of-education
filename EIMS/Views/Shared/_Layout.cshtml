@@ -1,0 +1,99 @@
+﻿<!Doctype html>
+<html lang="en">
+
+
+<!-- Mirrored from themesbrand.com/minible/layouts/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 May 2021 10:46:02 GMT -->
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="State Educational Portal" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/images/favicon.ico">
+    <!-- Sweet Alert-->
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Bootstrap Css -->
+    <link href="~/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+
+    <!-- Icons Css -->
+    <link href="~/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+    @RenderSectionAsync("Styles", required: false)
+    <!-- App Css-->
+    <link href="~/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="~/css/site.css" rel="stylesheet" type="text/css" />
+    
+    <style>
+        .page-content {
+            padding: 3rem 1rem;
+        }
+    </style>
+    <title>@ViewBag.Title | Emis</title>
+</head>
+
+
+<body>
+
+    <!-- <body data-layout="horizontal" data-topbar="colored"> -->
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        @await Html.PartialAsync("_Header")
+        @await Html.PartialAsync("_Sidebar")
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                @await Html.PartialAsync("_SweetNotification")
+
+                @RenderBody()
+            </div>
+            <!-- End Page-content -->
+
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <script>document.write(new Date().getFullYear())</script> © EMIS.
+                        </div>
+                        @* <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+                                    Crafted with <i class="mdi mdi-heart text-danger"></i> by <a href="https://themesbrand.com/" target="_blank" class="text-reset">Themesbrand</a>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+    <!-- JAVASCRIPT -->
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/metismenu/metisMenu.min.js"></script>
+    <script src="~/lib/simplebar/simplebar.min.js"></script>
+    <script src="~/lib/node-waves/waves.min.js"></script>
+    <script src="~/lib/waypoints/lib/jquery.waypoints.min.js"></script>
+    <script src="~/lib/jquery.counterup/jquery.counterup.min.js"></script>
+    <!-- Sweet Alerts js -->
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+
+    <!-- Sweet alert init js-->
+    <script src="~/js/pages/sweet-alerts.init.js"></script>
+    <!-- apexcharts -->
+    <script src="~/lib/apexcharts/apexcharts.min.js"></script>
+
+    <script src="~/js/pages/dashboard.init.js"></script>
+    <script src="~/js/app.js"></script>
+    <script src="~/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+
+
+</html>

@@ -1,0 +1,123 @@
+﻿@*@model IEnumerable<SchoolViewModel>*@
+@*@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using DataTables.AspNetCore.Mvc*@
+
+@{
+    ViewBag.Title = "Inactive Schools";
+}
+
+@section Styles
+{
+    <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
+
+<section class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0">
+                  <a href="@Url.Action("AllSchools")"><i class="fa fa-fw fa-arrow-circle-left"></i>
+                      </a>  
+                    @ViewBag.Title
+                </h4>
+
+                @*<div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
+                            <li class="breadcrumb-item active">Datatables</li>
+                        </ol>
+                    </div>*@
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <h4 class="card-title">@ViewBag.Title Table</h4>
+                 @*   <p class="card-title-desc">
+                        Inactive Schools are not displayed here.( <b><a href="#">View Inactive Schools</a>. </b>)
+                    </p>*@
+                    <div class="table-responsive">
+                        <table id="data-table" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>School code</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Address</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+
+
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+</section>
+
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#data-table").DataTable({
+                "processing": true, // for show progress bar    
+                "serverSide": true, // for process server side    
+                "filter": true, // this is for disable filter (search box)    
+                "orderMulti": false, // for disable multiple column at once    
+                "ajax": {
+                    "url": "/School/GetInSchools",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": true
+                    }
+                ],
+                "columns": [    
+                    { "data": "id", "name": "Id", "autoWidth": true },  
+                    { "data": "schoolName", "name": "Name", "autoWidth": true },  
+                    { "data": "email", "name": "Email", "autoWidth": true },  
+                    { "data": "schoolCode", "name": "School code", "autoWidth": true },  
+                    { "data": "categoryName", "name": "Category", "autoWidth": true },  
+                    { "data": "typeName", "name": "Type", "autoWidth": true },  
+                    { "data": "address", "name": "Address", "autoWidth": true }, 
+                    { "data": "status", "name": "Status", "autoWidth": true }, 
+                    { "data": "address", render: function(data, type, row) {
+                        return "<div class='dropdown dropstart'>" +
+                            "<button class='btn btn-light btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
+                            "<i class='uil uil-ellipsis-v'></i>" +
+                            "</button>" +
+                            "<div class='dropdown-menu'>"+
+                            "<a class='dropdown-item text-primary' href='EditSchool/"+ row.id +"'><i class='uil uil-pen'></i> Edit</a>"+
+                            "<a class='dropdown-item text-success' href='ChangeSchoolStatus/" + row.id +"'><i class='uil uil-times-square'></i>Activate</a>"+
+                            "<a class='dropdown-item text-danger' href='RemoveSchool/" + row.id +"'><i class='uil uil-trash-alt'></i> Delete School</a>"+
+                            "</div>" +
+                            "</div>";
+                    } } 
+                ]
+
+            });
+        });
+    </script>
+}

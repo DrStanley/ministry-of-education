@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210525132223_TeacherSubjectsModels.cs" />
+    <Compile Remove="Migrations\20210525132223_TeacherSubjectsModels.Designer.cs" />
+    <Compile Remove="Migrations\20210525132857_TeacherSubjectsModels.cs" />
+    <Compile Remove="Migrations\20210525132857_TeacherSubjectsModels.Designer.cs" />
+    <Compile Remove="Migrations\20210525133140_TeacherSubjectsModels.cs" />
+    <Compile Remove="Migrations\20210525133140_TeacherSubjectsModels.Designer.cs" />
+    <Compile Remove="Migrations\20210606085139_LocalGovIDRename.cs" />
+    <Compile Remove="Migrations\20210606085139_LocalGovIDRename.Designer.cs" />
+    <Compile Remove="Migrations\20210606193719_LogTable.cs" />
+    <Compile Remove="Migrations\20210606193719_LogTable.Designer.cs" />
+    <Compile Remove="Migrations\20210606195115_LogTable.cs" />
+    <Compile Remove="Migrations\20210606195115_LogTable.Designer.cs" />
+    <Compile Remove="Migrations\20210609131954_LogTables.cs" />
+    <Compile Remove="Migrations\20210609131954_LogTables.Designer.cs" />
+    <Compile Remove="Migrations\20210609133438_LoggingTables.cs" />
+    <Compile Remove="Migrations\20210609133438_LoggingTables.Designer.cs" />
+    <Compile Remove="Migrations\20210609145541_LoggingTable.cs" />
+    <Compile Remove="Migrations\20210609145541_LoggingTable.Designer.cs" />
+    <Compile Remove="Migrations\20210609200056_LogTable.cs" />
+    <Compile Remove="Migrations\20210609200056_LogTable.Designer.cs" />
+    <Compile Remove="Migrations\20210621134918_AddQualification.cs" />
+    <Compile Remove="Migrations\20210621134918_AddQualification.Designer.cs" />
+    <Compile Remove="Migrations\20210621153513_AddQualificationModel.cs" />
+    <Compile Remove="Migrations\20210621153513_AddQualificationModel.Designer.cs" />
+    <Compile Remove="Migrations\20210623140000_ModifiedQualifications.cs" />
+    <Compile Remove="Migrations\20210623140000_ModifiedQualifications.Designer.cs" />
+    <Compile Remove="Migrations\20210623095608_StudentAndClasses.cs" />
+    <Compile Remove="Migrations\20210623095608_StudentAndClasses.Designer.cs" />
+    <Compile Remove="Migrations\20210629115032_ExamSubjectsManytoMany.cs" />
+    <Compile Remove="Migrations\20210629115032_ExamSubjectsManytoMany.Designer.cs" />
+    <Compile Remove="Migrations\20210702131906_ChangedExaminationFeeColumnType.cs" />
+    <Compile Remove="Migrations\20210702131906_ChangedExaminationFeeColumnType.Designer.cs" />
+    <Compile Remove="Migrations\20210702133941_ChangedExaminationFeeColumnType.cs" />
+    <Compile Remove="Migrations\20210702133941_ChangedExaminationFeeColumnType.Designer.cs" />
+    <Compile Remove="Migrations\20210724213340_InspectorEntity.cs" />
+    <Compile Remove="Migrations\20210724213340_InspectorEntity.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="DataTables.AspNetCore.Mvc" Version="1.4.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.14" />
+    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EIMS.Domain\EIMS.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

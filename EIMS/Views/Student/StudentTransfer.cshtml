@@ -1,0 +1,216 @@
+﻿@model StudentTransferViewModel
+@{
+    ViewData["Title"] = "StudentTransfer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 mx-lg-auto">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Transfer @Model.Name
+
+                </h5>
+                <div class="text-center"><h6>From</h6></div>
+                <hr />
+
+                <div class="row">
+                    <div class="col-lg-11 mx-lg-auto">
+                        <div class="mt-4">
+                            <form method="post" action="TransferTeacher">
+                                <h6 class="text-danger">@TempData["TransferError"]</h6>
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden" asp-for="Id">
+                                <input type="hidden" asp-for="Name">
+
+                                <div class="row mb-3">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <label class="form-label pt-2" asp-for="LocalGovernmentId"></label>
+                                            </div>
+                                            <div class="col-lg-6 mb-2">
+                                                <input type="hidden" class="form-control" asp-for="LocalGovernmentId" />
+                                                <input type="text" class="form-control" readonly asp-for="LocalGovernment.Name" />
+                                            </div>
+                                            <span class="text-danger" asp-validation-for="ClassType"></span>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label class="form-label pt-2" asp-for="SchoolId"></label>
+                                            </div>
+                                            <div class="col-lg-6 mb-2">
+                                                <input type="hidden" class="form-control" asp-for="SchoolId" />
+                                                <input type="text" class="form-control" readonly asp-for="School.SchoolName" />
+                                            </div>
+                                            <span class="text-danger" asp-validation-for="SchoolId"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <label class="form-label pt-2" asp-for="ClassType"></label>
+                                            </div>
+                                            <div class="col-lg-6 mb-2">
+                                                <input type="text" class="form-control" readonly id="formrow-firstname-input" asp-for="ClassType" />
+                                            </div>
+                                            <span class="text-danger" asp-validation-for="ClassType"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label class="form-label pt-2" asp-for="ClassesId"></label>
+                                            </div>
+                                            <div class="col-lg-6 mb-2">
+                                                <input type="text" class="form-control" readonly asp-for="Classes.ClassName" />
+                                            </div>
+                                            <span class="text-danger" asp-validation-for="ClassesId"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <h6>To</h6>
+                                </div>
+                                <hr />
+
+                                @*Transfer To View*@
+
+
+                                <div class="row mb-3">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <label class="form-label pt-2" asp-for="LocalGovernmentIdTo"></label>
+                                            </div>
+                                            <div class="col-lg-6 mb-2">
+                                                <select class="form-select" id="LocalGovernmentIdTo" onchange="AddSchools()" required asp-for="LocalGovernmentIdTo" asp-items="@(new SelectList(Model.LocalGovernments, "Id", "Name"))">
+                                                    <option selected="selected" value="" disabled aria-disabled="True">Please select LGA</option>
+                                                </select>
+                                            </div>
+                                            <span class="text-danger" asp-validation-for="LocalGovernmentIdTo"></span>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label class="form-label pt-2" asp-for="SchoolIdTo"></label>
+                                            </div>
+                                            <div class="col-lg-6 mb-2">
+
+                                                <select class="form-select" id="School" required asp-for="SchoolIdTo">
+                                                    <option selected="selected" value="" disabled aria-disabled="True">Please select LGA</option>
+                                                </select>
+                                            </div>
+                                            <span class="text-danger" asp-validation-for="SchoolIdTo"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <label class="form-label pt-2" asp-for="ClassTypeTo"></label>
+                                            </div>
+                                            <div class="col-lg-6 mb-2">
+                                                <select class="form-select" id="ClassTypeTo" onchange="AddClasses()" required asp-for="ClassTypeTo" asp-items="Html.GetEnumSelectList<ClassType>()">
+                                                    <option selected="selected" value="" disabled aria-disabled="True">Please select Class Type</option>
+                                                </select>
+                                                <span class="text-danger" asp-validation-for="ClassTypeTo"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label class="form-label pt-2" asp-for="ClassesIdTo"></label>
+                                            </div>
+                                            <div class="col-lg-6 mb-2">
+                                                <select class="form-select" id="ClassesIdTo" required asp-for="ClassesIdTo">
+                                                    <option selected="selected" value="" disabled aria-disabled="True">Please select Class Type</option>
+                                                </select>
+                                                <span class="text-danger" asp-validation-for="ClassesIdTo"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-lg mb-3 "><b>Transfer</b></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function AddSchools() {
+        var LocalGovernmentId = $("#LocalGovernmentIdTo").val();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("GetSchoolsByLga", "Student")',
+                data: { "id": LocalGovernmentId },
+                success: function (json, textStatus) {
+                    $("#School").empty();
+                    json = json || {};
+                    if (json.length>0) {
+                        $("#School").append('<option  disabled selected aria-disabled="True" value="' + 0 + '"> Please select School</option>');
+                        for (var i = 0; i < json.length; i++) {
+                            $("#School").append('<option value="' + json[i].id + '">' + json[i].schoolName + '</option>');
+                        }
+                    } else {
+                        $("#School").append('<option  disabled aria-disabled="True" value="' + 0 + '">No School Reistered in LGA</option>');
+
+                    }
+
+                },
+                error: function () {
+                    alert("No School Found");
+                }
+        });
+
+    }
+    function AddClasses() {
+        var classTypeId = $("#ClassTypeTo").val();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("GetClassByType", "Student")',
+                data: { "id": classTypeId },
+                success: function (json, textStatus) {
+                    $("#ClassesIdTo").empty();
+                    json = json || {};
+                    if (json.length>0) {
+                        $("#ClassesIdTo").append('<option  disabled aria-disabled="True" value="' + 0 + '"> Please select Class</option>');
+                        for (var i = 0; i < json.length; i++) {
+                            $("#ClassesIdTo").append('<option value="' + json[i].id + '">' + json[i].className + '</option>');
+                        }
+                    } else {
+                        $("#ClassesIdTo").append('<option  disabled aria-disabled="True" value="' + 0 + '">No Class Registered</option>');
+
+                    }
+
+                },
+                error: function () {
+                    alert("No School Found");
+                }
+        });
+
+    }
+</script>

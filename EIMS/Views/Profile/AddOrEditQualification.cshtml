@@ -1,0 +1,54 @@
+﻿
+@model QualificationViewModel
+@{
+    Layout = null;
+}
+
+
+<form asp-action="AddOrEditQualification" asp-route-id="@Model.Id" autocomplete="false">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="TeacherId" />
+    <div class="row mb-3">
+        <div class="col-sm-6 mb-2 mb-sm-0">
+            <label class="form-label" asp-for="SchoolName"></label>
+            <input class="form-control" asp-for="SchoolName" style="max-width: none" placeholder="Chemistry teacher" />
+            <span asp-validation-for="SchoolName"></span>
+        </div>
+        <div class="col-sm-6 mb-2 mb-sm-0">
+            <label class="form-label" asp-for="EducationLevel"></label>
+            <select class="form-select"  asp-for="EducationLevel" asp-items="Html.GetEnumSelectList<EducationLevel>()">
+                <option selected="selected" value="" disabled>Please Select Category</option>
+            </select>
+            <span asp-validation-for="EducationLevel"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm-6 mb-2 mb-sm-0">
+            <label class="form-label" asp-for="StartYear"></label>
+            <select class="form-select" id="formrow-first" asp-for="StartYear">
+                <option selected="selected" value="" disabled>Please Select Category</option>
+                @foreach (var year in Model.YearList)
+                {
+                    <option value="@year">@year</option>
+                }
+            </select>
+            <span asp-validation-for="StartYear"></span>
+        </div>
+        <div class="col-sm-6 mb-2 mb-sm-0">
+            <label class="form-label" asp-for="EndYear"></label>
+            <select class="form-select" id="formrow-firstname-input" asp-for="EndYear">
+                <option selected="selected" value="" disabled>Please Select Category</option>
+                @foreach (var year in Model.YearList)
+                {
+                    <option value="@year">@year</option>
+                }
+            </select>
+            <span asp-validation-for="EndYear"></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+    </div>
+</form>

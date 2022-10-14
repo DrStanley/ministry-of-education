@@ -1,0 +1,160 @@
+﻿@*@model IEnumerable<SchoolViewModel>*@
+@*@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @using DataTables.AspNetCore.Mvc*@
+
+@{
+    ViewBag.Title = "All Examinations";
+}
+
+@section Styles
+{
+    <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
+
+<section class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+
+                @*<div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
+                            <li class="breadcrumb-item active">Datatables</li>
+                        </ol>
+                    </div>*@
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">@ViewBag.Title Table</h4>
+                    <a class="btn btn-primary" asp-action="AddExam">Add New Examination</a>
+                </div>
+                <div class="card-body">
+                    @*<p class="card-title-desc">
+                            Inactive Schools are not displayed here.( <b><a href="@Url.Action("AllInactiveSchool")">View Inactive Schools</a>. </b>)
+                        </p>*@
+                    <div class="table-responsive">
+                        <table id="data-table" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Examination name</th>
+                                    <th>Examination code</th>
+                                    <th>Examination fee</th>
+                                    <th>Category</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+</section>
+
+
+<!--Delete work experience modal-->
+<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="deleteModalLabel">Delete examination?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body px-4">
+                <p>Are you sure you want to delete this examination <span id="del-exam"></span>?</p>
+            </div>
+            <div class="modal-footer">
+                <!-- Toogle to second dialog -->
+                <a id="delete-btn" type="button" href="DeleteExam/row.id" class="btn-danger btn"><i class='uil uil-trash-alt'></i> Delete exam</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        var targetExam = 0;
+
+        function showDeleteModal(param) {
+            var paramArray = param.split('&');
+            var id = paramArray[0];
+            var name = paramArray[1];
+            var link = `DeleteExam/${id}`;
+            $('#delete-modal').modal('show');
+            document.getElementById('del-exam').innerHTML = name;
+            document.getElementById('delete-btn').href = link;
+        }
+
+        $(document).ready(function() {
+            $("#data-table").DataTable({
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/Exam/GetExams",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": true
+                    }
+                ],
+                "columns": [
+                    { "data": "id", "name": "Id", "autoWidth": true },
+                    { "data": "examinationName", "name": "Examination name", "autoWidth": true },
+                    { "data": "examinationCode", "name": "Examination code", "autoWidth": true },
+                    { "data": "fee", "name": "Examination fee", "autoWidth": true },
+                    { "data": "category", "name": "Category", "autoWidth": true },
+                    {
+                        "data": "address",
+                        render: function(data, type, row) {
+                            return "<div class='dropdown dropstart'>" +
+                                "<button class='btn btn-light btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" +
+                                "<i class='uil uil-ellipsis-v'></i>" +
+                                "</button>" +
+                                "<div class='dropdown-menu'>" +
+                                "<a class='dropdown-item text-primary' href='EditExam/" +
+                                row.id +
+                                "'><i class='uil uil-pen'></i> Edit</a>" +
+                                "<a class='dropdown-item text-danger' href='DeactivateExam/" +
+                                row.id +
+                                "'><i class='uil uil-times-square'></i>Deactivate</a>" +
+                                "<a class='dropdown-item text-success' href='AddExamSubjects/" +
+                                row.id +
+                                "'><i class='uil uil-plus'></i>Add Subjects</a>" +
+                                "<a class='dropdown-item text-danger'" +
+                                "onclick='showDeleteModal(" +
+                                `"${row.id + "&" + row.examinationCode}"` +
+                                ")'" +
+                                "style='cursor: pointer;'><i class='uil uil-trash-alt'></i> Delete Exam</a>" +
+                                "</div>" +
+                                "</div>";
+                        }
+                    }
+                ]
+
+            });
+        });
+    </script>
+}

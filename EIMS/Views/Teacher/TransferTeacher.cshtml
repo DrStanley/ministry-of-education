@@ -1,0 +1,108 @@
+﻿@model TransferTeacherViewModel
+@{
+    ViewData["Title"] = "Transfer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12 mx-lg-auto">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Transfer A Teacher</h5>
+                <hr />
+
+                <div class="row">
+                    <div class="col-lg-11 mx-lg-auto">
+                        <div class="mt-4">
+                            <form method="post" action="TransferTeacher">
+                                <h3 class="text-danger">@TempData["TransferError"]</h3>
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <input type="hidden" asp-for="Id">
+
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="Name"></label>
+                                            <input type="text" asp-for="Name" class="form-control" readonly id="formrow-firstname-input">
+                                            <span class="text-danger" asp-validation-for="Name"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="Email"></label>
+                                            <input type="email" class="form-control" readonly id="formrow-firstname-input" asp-for="Email">
+                                            <span class="text-danger" asp-validation-for="Email"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="LocalGovernmentId"></label>
+                                            <input type="hidden" class="form-control" asp-for="LocalGovernmentId" />
+                                            <input type="text" class="form-control" readonly asp-for="LocalGovernment.Name" />
+                                            </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="SchoolId"></label>
+                                            <input type="hidden" class="form-control" asp-for="LocalGovernmentId" />
+                                            <input type="text" class="form-control" readonly asp-for="School.SchoolName" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="LocalGovernmentIdTo"></label>
+                                            <select class="form-select" id="LocalGovernmentIdTo" onchange="fnSubmit()" asp-for="LocalGovernmentIdTo" asp-items="@(new SelectList(Model.LocalGovernmentsTo, "Id", "Name"))">
+                                                <option selected="selected" value="" disabled aria-disabled="True">Please select LGA</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="SchoolIdTo"></label>
+                                            <select class="form-select" id="School" asp-for="SchoolIdTo">
+                                                <option selected="selected" value="" disabled aria-disabled="True">Please select School</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-lg mb-3 "><b>Transfer</b></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function fnSubmit() {
+        var LocalGovernmentId = $("#LocalGovernmentIdTo").val();
+        $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("GetSchoolsByLga", "Teacher")',
+                data: { "id": LocalGovernmentId },
+                success: function (json, textStatus) {
+                    $("#School").empty();
+                    $("#School").append('<option selected disabled value="' + 0 + '"> Please select School</option>');
+                    json = json || {};
+                    for (var i = 0; i < json.length; i++) {
+                        $("#School").append('<option value="' + json[i].id + '">' + json[i].schoolName + '</option>');
+                    }
+                    $("#School").prop("disabled", false);
+                },
+                error: function () {
+                    alert("No School Found");
+                }
+        });
+
+    }
+</script>

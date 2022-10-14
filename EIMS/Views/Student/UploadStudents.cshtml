@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "Upload Students";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Upload Students</h4>
+                <p class="card-title-desc mb-1">
+                    Please make sure the Excel.xls file is well formatted like below.
+                </p>
+                <p>
+                    <strong>Name | Gender | State of Origin | Date of Birth(mm/dd/yyyy) | Next of kin Name| Relation of Kin| Contact of Kin</strong>
+                </p>
+                <div>
+
+                    <form asp-action="UploadStudents" asp-controller="Student" method="post"
+                          enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        <div class="text-danger">@TempData["UploadError"]</div>
+                        <div class="editable-input">
+                            <input name="file" required type="file" accept=".xls,.xlsx">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Upload</button>
+                        </div>
+                    </form>
+
+                    @* <form asp-action="UploadSchool" class="dropzone d-flex w-100 flex-column justify-content-center text-center" method="post" enctype="multipart/form-data">
+                            <div class="text-danger">@TempData["UploadError"]</div>
+                            <div class=" mb-2">
+                                <h4 class="text-muted text-center">Drag and drop file here</h4>
+                            </div>
+                            <div class="editable-input mx-auto">
+                                <input name="file" type="file" accept=".xls,.xlsx" />
+                            </div>
+                            <div class="text-center">
+                                <p class="text-muted">Allowed format: .xls, .xlsx</p>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Upload</button>
+                            </div>
+                        </form>*@
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

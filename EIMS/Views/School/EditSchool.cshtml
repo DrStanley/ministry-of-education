@@ -1,0 +1,156 @@
+﻿@model EditSchoolViewModel
+
+@{
+    ViewBag.Title = "Edit School";
+}
+
+<section class="container-fluid">
+    <!-- start page title -->
+    <header class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0">@ViewBag.SchoolName</h4>
+
+                @*  <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+                            <li class="breadcrumb-item active">Basic Elements</li>
+                        </ol>
+                    </div>*@
+
+            </div>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-lg-12 mx-lg-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-lg-11 mx-lg-auto">
+                            <div class="mt-4">
+                                <form method="post" asp-action="EditSchool">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" asp-for="Id"/>
+                                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="SchoolName"></label>
+                                                <input type="text" asp-for="SchoolName" class="form-control" name="SchoolName">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="Email"></label>
+                                                <input type="email" class="form-control" readonly asp-for="Email" name="Email">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="SchoolCode"></label>
+                                                <input type="number" class="form-control" id="formrow-email-input" readonly asp-for="SchoolCode" name="SchoolCode">
+                                                <span asp-validation-for="SchoolCode" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="SchoolCategory"></label>
+                                                <select class="form-select" asp-for="SchoolCategory" asp-items="Html.GetEnumSelectList<SchoolCategory>()">
+                                                    <option selected="selected" value="" disabled>Please Select Category</option>
+                                                </select>
+                                                <span asp-validation-for="SchoolCategory" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="SchoolType"></label>
+                                                <select class="form-select" asp-for="SchoolType" asp-items="Html.GetEnumSelectList<SchoolType>()">
+                                                    <option selected="selected" value="" disabled>Please Select Type</option>
+                                                </select>
+                                                <span asp-validation-for="SchoolType" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="Address"></label>
+                                                <input type="text" class="form-control" asp-for="Address">
+                                                <span asp-validation-for="Address" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="LocalGovernmentId"></label>
+                                                <select class="form-select" id="formrow-firstname-input" asp-for="LocalGovernmentId" asp-items="@(new SelectList(Model.LocalGovernments, "Id", "Name"))">
+                                                    <option selected="selected" value="" disabled>Please select LGA</option>
+                                                </select>
+                                                <span asp-validation-for="LocalGovernmentId" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="IncorporationDate"></label>
+                                                <input type="date" class="form-control" asp-for="IncorporationDate" />
+                                                <span asp-validation-for="IncorporationDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="PhoneNumber"></label>
+                                                <input type="tel" class="form-control" id="formrow-firstname-input" asp-for="PhoneNumber">
+                                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                    @*    <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="Title"></label>
+                                                <input type="text" class="form-control" id="formrow-email-input" asp-for="Title">
+                                                <span asp-validation-for="Title" class="text-danger"></span>
+                                            </div>
+                                        </div>*@
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="PrincipalName"></label>
+                                                <input type="text" asp-for="PrincipalName" readonly class="form-control">
+                                                <span asp-validation-for="PrincipalName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <button type="submit" class="btn btn-primary w-md">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section Scripts
+{
+    <script src="lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

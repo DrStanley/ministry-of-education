@@ -1,0 +1,114 @@
+﻿@model ExamViewModel
+@{
+    ViewBag.Title = $"Edit {Model.ExaminationName} Details";
+}
+
+<section class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 mx-lg-auto">
+            <div class="card">
+                <div class="card-header d-flex">
+                    <h4 class="card-title">@Model.ExaminationName</h4>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-lg-11 mx-lg-auto">
+                            <div class="mt-4">
+                                <form method="post" asp-action="EditExam">
+                                    @Html.AntiForgeryToken()
+                                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="ExaminationName"></label>
+                                                <input type="text" asp-for="ExaminationName" class="form-control w-full" id="formrow-firstname-input" style="max-width: none">
+                                                <span class="text-danger" asp-validation-for="ExaminationName"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="ExaminationCode"></label>
+                                                <input type="text" class="form-control w-full" id="formrow-examcode" asp-for="ExaminationCode" style="max-width: none">
+                                                <span class="text-danger" asp-validation-for="ExaminationCode"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="ExamCategory"></label>
+                                                <select class="form-select w-full" id="formrow-category" asp-for="ExamCategory" asp-items="Html.GetEnumSelectList<SchoolCategory>()"
+                                                        style="max-width: none; width: 100%">
+                                                    <option selected="selected" value="" disabled>Please Select Category</option>
+                                                </select>
+                                                <span class="text-danger" asp-validation-for="ExamCategory"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="ClassId"></label>
+                                                <select class="form-select w-full" asp-for="ClassId" asp-items="@(new SelectList(Model.Classes, "Id", "ClassName"))"
+                                                        style="max-width: none">
+                                                    <option selected="selected" value="" disabled aria-disabled="True">Please select a Class</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="d-flex flex-wrap w-100 mb-4">
+                                        <button class="btn w-100 bg-light shadow-sm has-arrow waves-effect" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseExample" aria-expanded="false"
+                                                aria-controls="collapseExample">
+                                            Add examination fee
+                                            <i class='uil uil-angle-down pt-3' style="font-size: 1.53em;"></i>
+                                        </button>
+                                    </div>
+                                    <div class="collapse show" id="collapseExample">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label" asp-for="ExamFee"></label>
+                                                    <input class="form-control w-100" type="number" asp-for="ExamFee" inputmode="numeric" style="max-width: none"/>
+                                                    <span class="text-danger" asp-validation-for="ExamFee"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label" asp-for="ExamYear"></label>
+                                                    <select class="form-select w-100" id="formrow-category" asp-for="ExamYear"
+                                                            style="max-width: none">
+                                                        @foreach (var year in Model.YearList)
+                                                        {
+                                                            <option value="@year">@year</option>
+                                                        }
+                                                    </select>
+                                                    <span class="text-danger" asp-validation-for="ExamCategory"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary w-md">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<partial name="_ValidationScripts" />

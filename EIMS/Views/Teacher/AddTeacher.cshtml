@@ -1,0 +1,68 @@
+﻿@model CreateTeacherViewModel
+@{
+    ViewBag.Title = "Add new teacher";
+}
+
+
+<section class="row">
+    <div class="col-md-12 mx-lg-auto">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Add A New Teacher</h5>
+                <hr />
+
+                <div class="row">
+                    <div class="col-lg-11 mx-lg-auto">
+                        <div class="mt-4">
+                            <form method="post" asp-action="AddTeacher">
+                                @Html.AntiForgeryToken()
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="Title"></label>
+                                            <select class="form-select w-100" id="formrow-email-input" asp-for="Title" style="max-width: none">
+                                                <option value="Mr">Mr.</option>
+                                                <option value="Mrs">Mrs.</option>
+                                                <option value="Dr">Dr.</option>
+                                            </select>
+                                            <span class="text-danger" asp-validation-for="Title"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="Name"></label>
+                                            <input type="text" asp-for="Name" class="form-control w-100" id="formrow-firstname-input" style="max-width: none;">
+                                            <span class="text-danger" asp-validation-for="Name"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="Email"></label>
+                                            <input type="text" asp-for="Email" id="formrow-email-input" class="form-control w-100" style="max-width: none;">
+                                            <span class="text-danger" asp-validation-for="Email"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="PhoneNumber"></label>
+                                            <input type="tel" id="formrow-phonenumber-input" asp-for="PhoneNumber" class="form-control w-100" style="max-width: none;">
+                                            <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-lg mb-3 "><b>Add Teacher</b></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

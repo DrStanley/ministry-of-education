@@ -1,0 +1,140 @@
+﻿@model AssignStudentViewModel
+@{
+    ViewData["Title"] = "Assign";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12 mx-lg-auto">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Assign A Student</h5>
+                <hr />
+
+                <div class="row">
+                    <div class="col-lg-11 mx-lg-auto">
+                        <div class="mt-4">
+                            <form method="post" action="AssignTeacher">
+                                <h3 class="text-danger">@TempData["AssignError"]</h3>
+                                @Html.AntiForgeryToken()
+
+                                <div class="row">
+                                    <input type="hidden" asp-for="Id">
+
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="Name"></label>
+                                            <input type="text" asp-for="Name" class="form-control" readonly id="formrow-firstname-input">
+                                            <span class="text-danger" asp-validation-for="Name"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="ClassType"></label>
+                                            <select class="form-select" id="ClassTypeId" onchange="AddClasses()" asp-for="ClassType" asp-items="Html.GetEnumSelectList<ClassType>()">
+                                                <option selected="selected" value="" disabled aria-disabled="True">Please select Class Type</option>
+                                            </select>
+                                            <span class="text-danger" asp-validation-for="ClassesId"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="ClassesId"></label>
+                                            <select class="form-select" id="ClassesId" asp-for="ClassesId">
+                                                <option selected="selected" value="" disabled aria-disabled="True">Please select Class Type</option>
+                                            </select>
+                                            <span class="text-danger" asp-validation-for="ClassesId"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" asp-for="LocalGovernmentId"></label>
+                                            <select class="form-select" id="LocalGovernmentId" onchange="AddSchools()" asp-for="LocalGovernmentId" asp-items="@(new SelectList(Model.LocalGovernments, "Id", "Name"))">
+                                                <option selected="selected" value="" disabled aria-disabled="True">Please select LGA</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" asp-for="SchoolId"></label>
+                                        <select class="form-select" id="School" asp-for="SchoolId">
+                                            <option selected="selected" value="" disabled aria-disabled="True">Please select LGA</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-lg mb-3 "><b>Assign</b></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function AddSchools() {
+        var LocalGovernmentId = $("#LocalGovernmentId").val();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("GetSchoolsByLga", "Student")',
+                data: { "id": LocalGovernmentId },
+                success: function (json, textStatus) {
+                    $("#School").empty();
+                    json = json || {};
+                    if (json.length>0) {
+                        $("#School").append('<option  disabled aria-disabled="True" value="' + 0 + '"> Please select School</option>');
+                        for (var i = 0; i < json.length; i++) {
+                            $("#School").append('<option value="' + json[i].id + '">' + json[i].schoolName + '</option>');
+                        }
+                    } else {
+                        $("#School").append('<option  disabled aria-disabled="True" value="' + 0 + '">No School Registered in LGA</option>');
+
+                    }
+
+                },
+                error: function () {
+                    alert("No School Found");
+                }
+        });
+
+    }
+    function AddClasses() {
+        var classTypeId = $("#ClassTypeId").val();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("GetClassByType", "Student")',
+                data: { "id": classTypeId },
+                success: function (json, textStatus) {
+                    $("#ClassesId").empty();
+                    json = json || {};
+                    if (json.length>0) {
+                        $("#ClassesId").append('<option  disabled aria-disabled="True" value="' + 0 + '"> Please select Class</option>');
+                        for (var i = 0; i < json.length; i++) {
+                            $("#ClassesId").append('<option value="' + json[i].id + '">' + json[i].className + '</option>');
+                        }
+                    } else {
+                        $("#ClassesId").append('<option  disabled aria-disabled="True" value="' + 0 + '">No Class Registered</option>');
+
+                    }
+
+                },
+                error: function () {
+                    alert("No School Found");
+                }
+        });
+
+    }
+</script>

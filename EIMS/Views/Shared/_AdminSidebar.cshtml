@@ -1,0 +1,120 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<li class="menu-title">Examinations</li>
+<li>
+    <a href="javascript: void(0);" class="has-arrow waves-effect">
+        <i class="uil-file-copy-alt"></i>
+        <span>Examinations</span>
+    </a>
+    <ul class="sub-menu" aria-expanded="true">
+        <li>
+            <a asp-action="Index" asp-controller="Exam">All Examinations</a>
+        </li>
+        <li>
+            <a asp-controller="Exam" asp-action="AddExam">Add Examination</a>
+        </li>
+    </ul>
+</li>
+
+<li class="menu-title">Schools</li>
+<li>
+    <a href="javascript: void(0);" class="has-arrow waves-effect">
+        <i class="uil-university"></i>
+        <span>Schools</span>
+    </a>
+    <ul class="sub-menu" aria-expanded="true">
+        <li>
+            <a asp-action="AllSchools" asp-controller="School">All Schools</a>
+        </li>
+        <li>
+            <a asp-action="AddSchool" asp-controller="School">Add School</a>
+        </li>
+        <li>
+            <a href="@Url.Action("UploadSchool", "School")">Upload School</a>
+        </li>
+    </ul>
+</li>
+
+<li class="menu-title">Teachers</li>
+<li>
+    <a href="javascript: void(0);" class="has-arrow waves-effect">
+        <i class="uil-users-alt"></i>
+        <span>Teachers</span>
+    </a>
+    <ul class="sub-menu" aria-expanded="true">
+        <li>
+            <a href="@Url.Action("AllTeachers", "Teacher")">All Teachers</a>
+        </li>
+        <li>
+            <a asp-action="AddTeacher" asp-controller="Teacher">Add Teacher</a>
+        </li>
+        <li>
+            <a href="@Url.Action("UploadTeachers", "Teacher")">Upload Teachers</a>
+        </li>
+    </ul>
+</li>
+
+<li class="menu-title">Students</li>
+<li>
+    <a href="javascript: void(0);" class="has-arrow waves-effect">
+        <i class="uil-users-alt"></i>
+        <span>Students</span>
+    </a>
+    <ul class="sub-menu" aria-expanded="true">
+        <li>
+            <a asp-action="AllStudent" asp-controller="Student">All Students</a>
+        </li>
+        <li>
+            <a asp-action="AddStudent" asp-controller="Student">Add Student</a>
+        </li>
+        <li>
+            <a asp-action="UploadStudents" asp-controller="Student">Upload Students</a>
+        </li>
+
+    </ul>
+</li>
+
+
+<li class="menu-title">Inspectors</li>
+<li>
+    <a href="javascript: void(0);" class="has-arrow waves-effect">
+        <i class="uil-users-alt"></i>
+        <span>Inspectors</span>
+    </a>
+    <ul class="sub-menu" aria-expanded="true">
+        <li>
+            <a asp-action="AllInspectors" asp-controller="Inspector">All Inspectors</a>
+        </li>
+        <li>
+            <a asp-action="AddInspector" asp-controller="Inspector">Add Inspector</a>
+        </li>
+    </ul>
+</li>
+
+<li class="menu-title">Classes</li>
+<li>
+    <a href="javascript: void(0);" class="has-arrow waves-effect">
+        <i class="uil-window-section"></i>
+        <span>Classes</span>
+    </a>
+    <ul class="sub-menu" aria-expanded="true">
+        <li>
+            <a asp-action="AllClasses" asp-controller="Classes">All Class</a>
+        </li>
+    </ul>
+</li>
+
+
+<li class="menu-title">Subject</li>
+<li>
+    <a href="javascript: void(0);" class="has-arrow waves-effect">
+        <i class="uil-window-section"></i>
+        <span>Subject</span>
+    </a>
+    <ul class="sub-menu" aria-expanded="true">
+        <li>
+            <a asp-action="AllSubjects" asp-controller="Subject">All Subjects</a>
+        </li>
+    </ul>
+</li>

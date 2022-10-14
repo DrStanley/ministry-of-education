@@ -1,0 +1,27 @@
+﻿@model ProfileViewModel
+
+<div id="qualifications">
+    <partial name="_Qualifications" model="Model.Teacher.Qualifications"/>
+</div>
+
+
+<button class="btn btn-primary mt-4 waves-effect waves-light"
+        onclick="showModal('@Url.Action("AddOrEditQualification", "Profile", new {teacherId = Model.TeacherId}, Context.Request.Scheme)', 'Add New Experience', 'myQually')">
+    <i class="uil uil-plus"> </i>Add Qualification
+</button>
+
+<!--Add or edit qualification modal-->
+<div id="myQually" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">Add Educational Background</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body px-4">
+
+            </div>
+        </div>
+    </div>
+</div>

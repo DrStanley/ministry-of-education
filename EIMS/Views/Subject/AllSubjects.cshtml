@@ -1,0 +1,112 @@
+﻿@model IEnumerable<SubjectViewModel>
+
+@{
+    ViewData["Title"] = "All Subjects";
+
+    ViewBag.Title = "All Subjects";
+    var count = 0;
+}
+
+@section Styles
+{
+    <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
+
+<section class="container-fluid">
+ 
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">@ViewBag.Title Table</h4>
+                    <a class="btn btn-primary" data-toggle="modal" data-bs-toggle="modal" data-target="#myModalS" data-bs-target="#myModalS"><b>Add New Subject</b></a>
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table id="subjects_table" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Name</th>
+                                <th>Subject Level</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            @{
+                                if (Model.Any())
+                                {
+                                    foreach (var subjectViewModel in Model)
+                                    {
+
+                                        <tr>
+                                            <td>@(++count)</td>
+                                            <td>@subjectViewModel.SubjectName</td>
+                                            <td>@subjectViewModel.LevelCategory.ToString()</td>
+                                            <td>
+                                                <div class='dropdown dropstart'>
+                                                    <button class='btn btn-light btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                                        <i class='uil uil-ellipsis-v'></i>
+                                                    </button>
+                                                    <div class='dropdown-menu'>
+                                                        <a class='dropdown-item text-primary' data-id=@subjectViewModel.Id data-toggle="modal" id="editBtn" data-bs-toggle="modal" data-target="#EditModalS" data-bs-target="#EditModalS">
+                                                            <i class='uil uil-pen'></i> EDIT
+                                                        </a>
+                                                        <a class='dropdown-item text-danger' href='@Url.Action("DeleteClass", new {id = subjectViewModel.Id})'><i class='uil uil-trash-alt'></i> DELETE</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    }
+
+                                }
+                            }
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+</section>
+@await Html.PartialAsync("_AddSubjectPartial")
+<div class="modal fade" id="EditModalS" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="editSubject" role="document">
+
+
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#subjects_table").DataTable({
+                "processing": true, // for show progress bar
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+            });
+
+            $('table #editBtn').on('click',
+                function () {
+                    var id = $(this).data("id");
+                    $.get(`/Subject/GetSubject/${id}`,
+                        function (res) {
+                            $("#editSubject").html(res);
+                        });
+                });
+
+        });
+    </script>
+}

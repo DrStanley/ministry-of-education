@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Qualification>
+
+
+
+<ol class="activity-feed mb-0 ps-2" data-simplebar style="max-height: 336px;">
+    @if (Model != null)
+    {
+        @if (Model.Any())
+        {
+            foreach (var qualification in Model)
+            {
+                <li class="feed-item">
+                    <h5 class="text-muted mb-1">@qualification.SchoolName</h5>
+                    <h6 class="mb-1">@qualification.EducationLevel</h6>
+                    <div class="feed-item-list mb-3">
+                        <p class="mb-2">
+                            <small class="d-inline-block">@qualification.StartYear - @qualification.EndYear </small>
+                        </p>
+                    </div>
+                    <div class="d-flex w-100 justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm" style="margin-right: 1rem" title="Edit"
+                                onclick="showModal('@Url.Action("AddOrEditQualification", "Profile",
+                                                        new
+                                                        {
+                                                            teacherId = qualification.TeacherId,
+                                                            id = qualification.Id
+                                                        }, Context.Request.Scheme)', 'Edit Educational Background', 'myQually')">
+                            <i class="uil uil-pen"></i>
+                        </button>
+                        <a asp-action="DeleteQualification" asp-route-id="@qualification.Id" class="btn btn-outline-danger btn-sm" title="Delete">
+                            <i class="uil uil-trash-alt"></i>
+                        </a>
+                    </div>
+                    <hr class="my-2"/>
+                </li>
+            }
+        }
+    }
+    else
+    {
+        <p class="text-muted text-center">No qualification</p>
+        <p class="text-muted text-center">Click Add Qualification to add your educational background</p>
+    }
+</ol>

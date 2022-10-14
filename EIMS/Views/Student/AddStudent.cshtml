@@ -1,0 +1,224 @@
+﻿@model CreateStudentViewModel
+@{
+    ViewBag.Title = "Add new Student";
+}
+
+
+<section class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 mx-lg-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-12 mx-lg-auto">
+                            <div class="mt-4">
+
+                                <form method="post" asp-action="AddStudent" asp-controller="Student">
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="Name"></label>
+                                                <input type="text" asp-for="Name" class="form-control" style="max-width: 100%">
+                                                <span class="text-danger" asp-validation-for="Name"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="Gender"></label>
+                                                <select style="max-width: 100%" class="form-select form-control" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()">
+                                                    <option value="" selected disabled aria-disabled="True">Select Gender</option>
+                                                </select>
+                                                <span class="text-danger" asp-validation-for="Gender"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="DateOfBirth"></label>
+                                                <input type="date" asp-for="DateOfBirth" class="form-control" style="max-width: 100%">
+                                                <span class="text-danger" asp-validation-for="DateOfBirth"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="StateOfOrigin"></label>
+                                                <select class="form-select w-100" asp-for="StateOfOrigin" asp-items="Html.GetEnumSelectList<States>()" style="max-width: none">
+                                                    <option value="" disabled aria-disabled="true">Choose State</option>
+                                                </select>
+                                                <span class="text-danger" asp-validation-for="StateOfOrigin"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="NextOfKinName"></label>
+                                                <input type="text" asp-for="NextOfKinName" class="form-control" style="max-width: 100%">
+                                                <span class="text-danger" asp-validation-for="NextOfKinName"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="NextOfKinRelation"></label>
+                                                <input type="text" asp-for="NextOfKinRelation" class="form-control" style="max-width: 100%">
+                                                <span class="text-danger" asp-validation-for="NextOfKinRelation"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="NextOfContact"></label>
+                                                <input type="text" asp-for="NextOfContact" class="form-control" style="max-width: 100%">
+                                                <span class="text-danger" asp-validation-for="NextOfContact"></span>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="d-flex flex-wrap w-100 mb-4">
+                                        <button class="btn w-100 bg-light shadow-sm has-arrow waves-effect" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseExample" aria-expanded="false"
+                                                aria-controls="collapseExample">
+                                            <span class="h6" style="margin-right: 50px">Add School</span>
+                                            <i class='uil uil-angle-down pt-3' style="font-size: 1.53em;"></i>
+                                        </button>
+                                    </div>
+                                    <div class="collapse show" id="collapseExample">
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label" asp-for="LocalGovernmentId"></label>
+                                                    <select style="max-width: 100%" class="form-select form-control" id="LocalGovernmentId" onchange="AddSchools()" asp-for="LocalGovernmentId" asp-items="@(new SelectList(ViewBag.LocalGovernments, "Id", "Name"))">
+                                                        <option selected="selected" value="" disabled aria-disabled="True">Please select LGA</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label" asp-for="SchoolId"></label>
+                                                    <select style="max-width: 100%" class="form-select form-control" id="School" asp-for="SchoolId">
+                                                        <option selected="selected" value="" disabled aria-disabled="True">Please select LGA</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label" asp-for="ClassType"></label>
+                                                    <select style="max-width: 100%" class="form-select form-control" id="ClassTypeId" onchange="AddClasses()" asp-for="ClassType" asp-items="Html.GetEnumSelectList<ClassType>()">
+                                                        <option selected="selected" value="" disabled aria-disabled="True">Please select Class Type</option>
+                                                    </select>
+                                                    <span class="text-danger" asp-validation-for="ClassesId"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label" asp-for="ClassesId"></label>
+                                                    <select style="max-width: 100%" class="form-select form-control" id="ClassesId" asp-for="ClassesId">
+                                                        <option selected="selected" value="" disabled aria-disabled="True">Please select Class Type</option>
+                                                    </select>
+                                                    <span class="text-danger" asp-validation-for="ClassesId"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary w-md">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<partial name="_ValidationScripts" />
+
+<script>
+    
+    function AddSchools() {
+        var LocalGovernmentId = $("#LocalGovernmentId").val();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: '@Url.Action("GetSchoolsByLga", "Student")',
+            data: { "id": LocalGovernmentId },
+            success: function (json, textStatus) {
+                $("#School").empty();
+                json = json || {};
+                if (json.length>0) {
+                    $("#School").append('<option  disabled aria-disabled="True" value="' + 0 + '"> Please select School</option>');
+                    for (var i = 0; i < json.length; i++) {
+                        $("#School").append('<option value="' + json[i].id + '">' + json[i].schoolName + '</option>');
+                    }
+                } else {
+                    $("#School").append('<option  disabled aria-disabled="True" value="' + 0 + '">No School Registered in LGA</option>');
+
+                }
+
+            },
+            error: function () {
+                alert("No School Found");
+            }
+        });
+
+    }
+    function AddClasses() {
+        var classTypeId = $("#ClassTypeId").val();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: '@Url.Action("GetClassByType", "Student")',
+            data: { "id": classTypeId },
+            success: function (json, textStatus) {
+                $("#ClassesId").empty();
+                json = json || {};
+                if (json.length>0) {
+                    $("#ClassesId").append('<option  disabled aria-disabled="True" value="' + 0 + '"> Please select Class</option>');
+                    for (var i = 0; i < json.length; i++) {
+                        $("#ClassesId").append('<option value="' + json[i].id + '">' + json[i].className + '</option>');
+                    }
+                } else {
+                    $("#ClassesId").append('<option  disabled aria-disabled="True" value="' + 0 + '">No Class Registered</option>');
+
+                }
+
+            },
+            error: function () {
+                alert("No School Found");
+            }
+        });
+
+    }
+</script>

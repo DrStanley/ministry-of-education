@@ -1,0 +1,118 @@
+﻿@model IEnumerable<SchoolViewModel>
+
+
+@{
+    ViewBag.Title = "All Schools";
+
+    var count = 0;
+}
+
+@section Styles
+{
+    <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
+
+<section class="container-fluid">
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">@ViewBag.Title Table</h4>
+                    <a class="btn btn-primary" href="@Url.Action("AllInactiveSchool")">View Inactive Schools</a>
+                </div>
+                <div class="card-body">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#profile1" role="tab" id="all1">
+                                <span class="d-none d-sm-block">All Schools</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " data-bs-toggle="tab" href="#profile2" role="tab" id="pub">
+                                <span class="d-none d-sm-block">Public Schools</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#profile3" role="tab" id="pri">
+                                <span class="d-none d-sm-block">Private School</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content p-3 text-muted">
+
+                        <!--All School tab-->
+                        <div class="tab-pane active" id="profile1" role="tabpanel">
+                            <div class="mb-0">
+                                <partial name="_AllSchool" model="Model" />
+                            </div>
+                        </div>
+                        
+                        <!--Public School tab-->
+                        <div class="tab-pane" id="profile2" role="tabpanel">
+                            <div class="mb-0">
+                                <partial name="_PublicSchools" model="Model" />
+                            </div>
+                        </div>
+
+                        <!--Private School tab-->
+                        <div class="tab-pane" id="profile3" role="tabpanel">
+                            <div class="mb-0">
+                                <partial name="_PrivateSchools" model="Model" />
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+</section>
+
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    @await Html.PartialAsync("_ValidationScripts");
+
+    <script>
+        $(document).ready(function () {
+            $("#data-tablePub").DataTable({
+                "processing": true, // for show progress bar
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+            });
+
+            $("#data-tablePri").DataTable({
+                "processing": true, // for show progress bar
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+            });
+
+            console.clear();
+            var hash = location.hash;
+            if (hash) {
+                var otherTab = document.getElementById("profile1");
+                var otherLink = document.getElementById("pub");
+                otherTab.classList.remove("active");
+                otherLink.classList.remove("active");
+                var targetTab = document.querySelector(hash);
+                var targetLink = document.querySelector(hash);
+                targetTab.classList.add("active");
+                targetLink.classList.add("active");
+                console.log(targetTab);
+            }
+
+        });
+
+    </script>
+}

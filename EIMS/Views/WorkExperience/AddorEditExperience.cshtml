@@ -1,0 +1,50 @@
+﻿@model WorkExperienceViewModel
+@{
+    Layout = null;
+}
+
+<form asp-action="AddorEditExperience" asp-route-id="@Model.Id" autocomplete="false">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="TeacherId" />
+    <div class="row mb-3">
+        <div class="col-sm-6 mb-2 mb-sm-0">
+            <label class="form-label" asp-for="JobTitle"></label>
+            <input class="form-control" asp-for="JobTitle" style="max-width: none" placeholder="Chemistry teacher" />
+            <span asp-validation-for="JobTitle"></span>
+        </div>
+        <div class="col-sm-6 mb-2 mb-sm-0">
+            <label class="form-label" asp-for="Company"></label>
+            <input class="form-control" style="max-width: none" asp-for="Company" />
+            <span asp-validation-for="Company"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm-6 mb-2 mb-sm-0">
+            <label class="form-label" asp-for="StartDate"></label>
+            <input class="form-control" type="date" asp-for="StartDate" />
+            <span asp-validation-for="StartDate"></span>
+        </div>
+        <div class="col-sm-6 mb-2 mb-sm-0">
+            <label class="form-label" asp-for="EndDate"></label>
+            <input class="form-control" type="date" asp-for="EndDate" />
+            <span asp-validation-for="EndDate"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <label class="form-label" asp-for="JobSummary"></label>
+            <textarea style="max-width: none" rows="5" class="form-control" asp-for="JobSummary"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+    </div>
+</form>
+
+
+@*@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScripts");
+}*@

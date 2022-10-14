@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EIMS.Domain.Entities.WorkExperience>
+
+@{
+    string ConvertToString(DateTime date)
+    {
+        return date.ToLongDateString();
+    }
+}
+
+<ol class="activity-feed mb-0 ps-2" data-simplebar style="max-height: 336px;">
+    @if (Model.Any())
+    {
+        foreach (var workExperience in Model)
+        {
+            <li class="feed-item">
+                <h5 class="text-muted mb-1">@workExperience.JobTitle</h5>
+                <h6 class="mb-1">@workExperience.Company</h6>
+                <div class="feed-item-list mb-3">
+                    <p class="mb-2">
+                        <small class="d-inline-block">@ConvertToString(workExperience.StartDate) - @(workExperience.StillWorking ? "Date" :  $"{ConvertToString(workExperience.EndDate.Value)}") </small>
+                    </p>
+                    <p class="mt-0 mb-0">
+                        @workExperience.JobSummary
+                    </p>
+                </div>
+                <div class="d-flex w-100 justify-content-end">
+                    <button class="btn btn-outline-primary btn-sm" style="margin-right: 1rem" title="Edit"
+                            onclick="showModal('@Url.Action("AddorEditExperience", "WorkExperience",
+                                                    new
+                                                    {
+                                                        teacherId= workExperience.TeacherId,
+                                                        id= workExperience.Id
+                                                    }, Context.Request.Scheme)', 'Edit Work Experience', 'myModal')">
+                        <i class="uil uil-pen"></i>
+                    </button>
+                    <a asp-action="DeleteExperience" asp-route-id="@workExperience.Id" asp-controller="WorkExperience" class="btn btn-outline-danger btn-sm" title="Delete">
+                        <i class="uil uil-trash-alt"></i>
+                    </a>
+                </div>
+                <hr class="my-2"/>
+            </li>
+        }
+    }
+    else
+    {
+        <p class="text-muted text-center">No work experience</p>
+    }
+</ol>
+
+
+
+@*data-bs-toggle="modal" data-bs-target="#myModal"*@

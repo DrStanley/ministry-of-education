@@ -1,0 +1,62 @@
+﻿@model AddExamStudentsViewModel
+@{
+    ViewBag.Title = "Enroll students to " + Model.ExaminationName;
+}
+
+
+<section class="container-fluid">
+
+
+    <div class="row">
+        <div class="col-lg-12 mx-lg-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-lg-11 mx-lg-auto">
+                            <div class="mt-4">
+                                <form method="post" asp-action="AddExamStudents" asp-route-id="@Model.ExamId">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" asp-for="SchoolId" />
+                                    <input id="selectAll" type="checkbox" class="mr-2"><label for='selectAll'>Select all</label>
+                                    @for (int i = 0; i < Model.ExamStudent.Count; i++)
+                                    {
+                                        <div class="form-check my-1">
+                                            <input type="hidden" asp-for="@Model.ExamStudent[i].Id" />
+                                            <input type="hidden" asp-for="@Model.ExamStudent[i].StudentName" />
+                                            <label class="form-check-label" asp-for="@Model.ExamStudent[i].Id">
+                                                <input asp-for="@Model.ExamStudent[i].IsAdded" class="form-check-input" />
+                                                @Model.ExamStudent[i].StudentName
+                                            </label>
+                                        </div>
+                                    }
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary w-md">Add Students</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+@section Scripts{
+    <script>
+        $("#selectAll").click(function () {
+            $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+
+        });
+        $("input[type=checkbox]").click(function () {
+            if (!$(this).prop("checked")) {
+                $("#selectAll").prop("checked", false);
+            }
+        });
+    </script>
+}

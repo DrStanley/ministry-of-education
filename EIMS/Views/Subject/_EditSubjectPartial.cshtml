@@ -1,0 +1,26 @@
+﻿@model SubjectViewModel
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">Edit Class</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+    </div>
+    <div class="modal-body">
+        <form method="post" asp-action="UpdateSubject" asp-controller="Subject">
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <input type="hidden" name="Id" class="col-md-6 form-control" asp-for="Id" value=@Model.Id />
+                <input type="text" name="ClassName" required class="col-md-6 form-control" asp-for="SubjectName" placeholder="Class Name" value="@Model.SubjectName" />
+                <select class="col-md-6 form-control mt-2" required value=@Model.LevelCategory name="ClassType" asp-for="LevelCategory" asp-items="Html.GetEnumSelectList<SchoolCategory>()">
+                    <option selected="selected" value="" disabled>Please Class Type</option>
+                </select>
+                <p class="text-danger">@ViewBag.Error</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-lg btn-primary" onclick="validate()">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+</div>

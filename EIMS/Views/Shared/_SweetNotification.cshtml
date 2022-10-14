@@ -1,0 +1,40 @@
+﻿<head>
+    <script src="~/Content/Assets/js/jquery-3.2.1.min.js"></script>
+    <!-- Sweet Alerts js -->
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+
+    <!-- Sweet alert init js-->
+    <script src="~/js/pages/sweet-alerts.init.js"></script>
+    <!-- Sweet Alert-->
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+@if ((string)TempData["notificationTitle"] != null)
+{
+<script>
+        Swal.fire({
+            position: 'center',
+            icon: '@TempData["notificationType"]',
+            title: '@TempData["notificationTitle"]',
+            text: '@TempData["notificationMessage"]',
+            showConfirmationButton: false,
+        });
+
+      
+</script>
+}
+
+@*    var msg = @(TempData["notificationMessage"]!=null?Html.Raw((TempData["notificationMessage"])):Html.Raw("null"));
+    if (msg != null) {
+        Swal.fire({
+            position: 'top-end',
+            icon:msg.icon,
+            title:msg.title,
+            text:msg.text,
+            showConfirmationButton: false});
+
+    }
+
+*@

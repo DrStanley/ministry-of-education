@@ -1,0 +1,98 @@
+﻿@model CreateStudentViewModel
+
+@{
+    ViewData["Title"] = "Edit Student";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container-fluid">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-12 mx-lg-auto">
+                            <div class="mt-4">
+
+                                <form method="post" asp-action="EditStudent" asp-controller="Student">
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                    <div class="row">
+                                        <div class="col-lg-5 mb-2">
+                                            <label class="form-label" asp-for="Name"></label>
+                                            <input type="text" asp-for="Name" class="form-control" style="max-width: 100%">
+                                            <span class="text-danger" asp-validation-for="Name"></span>
+                                        </div>
+
+                                        <div class="mb-2 col-lg-5">
+                                            <label class="form-label" asp-for="Gender"></label>
+                                            <select style="max-width: 100%" class="form-select form-control" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()">
+                                                <option value="" selected disabled aria-disabled="True">Select Gender</option>
+                                            </select>
+                                            <span class="text-danger" asp-validation-for="Gender"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="mb-2 col-lg-5">
+                                            <label class="form-label" asp-for="DateOfBirth"></label>
+                                            <input type="date" asp-for="DateOfBirth" class="form-control" style="max-width: 100%">
+                                            <span class="text-danger" asp-validation-for="DateOfBirth"></span>
+                                        </div>
+
+                                        <div class="mb-2 col-lg-5">
+                                            <label class="form-label" asp-for="StateOfOrigin"></label>
+                                            <select class="form-select form-control" asp-for="StateOfOrigin" style="max-width: 100%" asp-items="Html.GetEnumSelectList<States>()">
+                                                <option value="" disabled aria-disabled="True">Choose State</option>
+                                            </select> 
+                                            <span class="text-danger" asp-validation-for="StateOfOrigin"></span>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="mb-2 col-lg-5">
+                                            <label class="form-label" asp-for="NextOfKinName"></label>
+                                            <input type="text" asp-for="NextOfKinName" class="form-control" style="max-width: 100%">
+                                            <span class="text-danger" asp-validation-for="NextOfKinName"></span>
+                                        </div>
+
+                                        <div class="mb-2 col-lg-5">
+                                            <label class="form-label" asp-for="NextOfKinRelation"></label>
+                                            <input type="text" asp-for="NextOfKinRelation" class="form-control" style="max-width: 100%">
+                                            <span class="text-danger" asp-validation-for="NextOfKinRelation"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="mb-2 col-lg-5">
+                                            <label class="form-label" asp-for="NextOfContact"></label>
+                                            <input type="text" asp-for="NextOfContact" class="form-control" style="max-width: 100%">
+                                            <span class="text-danger" asp-validation-for="NextOfContact"></span>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary w-md">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+

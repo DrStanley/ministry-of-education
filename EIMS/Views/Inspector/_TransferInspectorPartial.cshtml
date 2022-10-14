@@ -1,0 +1,81 @@
+﻿@model TransferInspectorViewModel
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">Transfer Inspector</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+    </div>
+    <div class="modal-body">
+        <form method="post" asp-action="TransferInspector" asp-controller="Inspector">
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <input type="hidden" name="Id" class="col-md-6 form-control" asp-for="Id" value=@Model.Id />
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label pt-2" asp-for="Name"></label>
+                    </div>
+                    <div class="col-lg-6 mb-2">
+                        <input type="text" name="Name" required class="col-md-6 form-control" readonly asp-for="Name" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="LocalGovernmentId"></span>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label pt-2" asp-for="LocalGovernmentId"></label>
+                    </div>
+                    <div class="col-lg-6 mb-2">
+                        <input type="text" required class="col-md-6 form-control" readonly asp-for="LocalGovernment.Name" />
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label pt-2" asp-for="LocalGovernmentIdTo"></label>
+                    </div>
+                    <div class="col-lg-6 mb-2">
+                        <select id="LocalGovernmentId" class="form-select" required asp-for="LocalGovernmentIdTo" onchange="CheckLGA()" asp-items="@(new SelectList(ViewBag.Lga, "Id", "Name"))">
+                            <option selected="selected" value="" disabled aria-disabled="True">Please select LGA</option>
+                        </select>
+                    </div>
+                    <span class="text-danger" asp-validation-for="LocalGovernmentIdTo"> Hey</span>
+
+                </div>
+                <p class="text-danger"  id="LgaError">@ViewBag.Error</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-lg btn-primary" onclick="validate()">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    
+    <script>
+        function CheckLGA() {
+            var LocalGovernmentId = $("#LocalGovernmentId").val();
+            alert(LocalGovernmentId);
+            $("#LgaError").text('');
+            span.innerHTML = '';
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("CheckLga", "Inspector")',
+                data: { "id": LocalGovernmentId },
+                success: function (json, textStatus) {
+                    if (json) {
+                        $("#LgaError").text('This Local Government is Assigned, the inspector will be removed');
+                    } 
+                },
+                error: function () {
+                   // alert("No School Found");
+                }
+            });
+
+        }
+    </script>
+}

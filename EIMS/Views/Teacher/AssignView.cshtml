@@ -1,0 +1,138 @@
+﻿@model IEnumerable<TeacherViewModel>
+@{
+    ViewBag.Title = "Assign Teachers";
+    var count = 0;
+}
+
+@section Styles
+{
+    <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
+
+<section class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                @*<div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
+                            <li class="breadcrumb-item active">Datatables</li>
+                        </ol>
+                    </div>*@
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">@ViewBag.Title Table</h4>
+                    <a class="btn btn-info" href="@Url.Action("AssignView", new {type = @TempData["typeA"].ToString()})"><b>View @TempData["typeA"] Teachers</b></a>
+
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table id="teacher_table" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                @{
+                                    if (TempData["typeA"].ToString() == "unassign")
+                                    {
+                                        <th>Assigned LGA</th>
+                                        <th>Assigned School</th>
+
+                                    }
+
+                                }
+                                <th>Actions</th>
+
+                            </tr>
+                            </thead>
+
+
+                            <tbody>
+
+                            @foreach (var teacher in Model)
+                            {
+
+                                <tr>
+                                    <td>@(++count)</td>
+                                    <td>@teacher.User.Name</td>
+                                    <td>@teacher.User.Email</td>
+                                    <td>@teacher.Status</td>
+                                    @{
+                                        if (TempData["typeA"].ToString() == "unassign")
+                                        {
+                                            <td>@teacher.LocalGovernment.Name</td>
+                                            <td>@teacher.School.SchoolName</td>
+
+                                        }
+                                    }
+                                    <td>
+                                        <div class='dropdown dropstart'>
+                                            <button class='btn btn-light btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                                <i class='uil uil-ellipsis-v'></i>
+                                            </button>
+                                            <div class='dropdown-menu'>
+                                                @{
+                                                    if (TempData["typeA"].ToString() == "unassign")
+                                                    {
+                                                        <a class='dropdown-item text-primary' href='@Url.Action("TransferTeacher", new {id = teacher.Id})'><i class='uil uil-align-center-h'></i> Transfer Teacher</a>
+                                                        <a class='dropdown-item text-primary' href='@Url.Action("UnassignTeacher", new {id = teacher.Id})'><i class='uil uil-times-square'></i> Unassign Teacher</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class='dropdown-item text-primary' href='@Url.Action("AssignTeacher", new {id = teacher.Id})'><i class='uil uil-arrow-circle-up'></i> Assign Teacher</a>
+
+                                                    }
+                                                }
+
+                                            </div>
+                                        </div>
+
+                                        <!--<div class="d-flex align-items-center list-action">
+                                        <a onclick="ViewProduct(@teacher.Id)" class="badge badge-info mr-2" data-toggle="modal" data-placement="top" title="" data-original-title="View"
+                                           href=""><i data-toggle="tooltip" data-placement="top" data-original-title="View" class="ri-eye-line mr-0"></i></a>
+                                        <a onclick="EditProduct(@teacher.Id)" data-target="#edit-note" class="badge bg-success mr-2"
+                                           href="#"><i data-toggle="tooltip" data-placement="top" data-original-title="Edit" class="ri-pencil-line mr-0"></i></a>-->
+                                        @*<a onclick="RemoveProduct(@Product.Id)" class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                                ><i class="ri-delete-bin-line mr-0"></i></a>*@
+                                        <!--</div>-->
+                                    </td>
+
+                                </tr>
+                            }
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#teacher_table").DataTable({
+                "processing": true, // for show progress bar
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+            });
+        });
+    </script>
+}

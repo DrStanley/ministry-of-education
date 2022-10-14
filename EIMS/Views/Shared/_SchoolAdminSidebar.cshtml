@@ -1,0 +1,40 @@
+﻿@using System.Security.Claims
+
+<li class="menu-title">Enrollments</li>
+<li>
+    <a href="javascript: void(0);" class="has-arrow waves-effect">
+        <i class="uil-file-copy-alt"></i>
+        <span>Enroll Students</span>
+    </a>
+    <ul class="sub-menu" aria-expanded="true">
+        <li>
+            <a asp-action="Index" asp-controller="EnrollStudents">Enroll Students for Exams</a>
+        </li>
+    </ul>
+</li>
+
+<li class="menu-title">Students</li>
+<li>
+    <a href="javascript: void(0);" class="has-arrow waves-effect">
+        <i class="uil-file-copy-alt"></i>
+        <span>Students</span>
+    </a>
+    <ul class="sub-menu" aria-expanded="true">
+        <li>
+            <a href="@Url.Action("StudentSchool", "Student",new{email=User.FindFirst(ClaimTypes.Name).Value})">Students</a>
+        </li>
+    </ul>
+</li>
+
+<li class="menu-title">LGA Inspector</li>
+<li>
+    <a href="javascript: void(0);" class="has-arrow waves-effect">
+        <i class="uil-file-copy-alt"></i>
+        <span>Assigned Inspector</span>
+    </a>
+    <ul class="sub-menu" aria-expanded="true">
+        <li>
+            <a href="@Url.Action("SchoolInspector", "Inspector",new{mail=User.FindFirst(ClaimTypes.Name).Value})">View Inspector</a>
+        </li>
+    </ul>
+</li>

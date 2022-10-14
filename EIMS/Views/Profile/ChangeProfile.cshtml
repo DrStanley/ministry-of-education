@@ -1,0 +1,45 @@
+﻿@model ProfileViewModel
+@{
+    Layout = null;
+}
+<form asp-action="ChangeProfile" method="post" asp-controller="Profile" role="form">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <input class="hidden" asp-for="Id" />
+
+    <div class="row mb-4">
+        <div class="col-12 col-md-6">
+            <label class="form-label" asp-for="StateOfOrigin"></label>
+            <select class="form-select w-100" asp-for="StateOfOrigin" asp-items="Html.GetEnumSelectList<States>()">
+                <option value="" disabled aria-disabled="True">Choose State</option>
+            </select>
+            <span class="text-danger" asp-validation-for="StateOfOrigin"></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label" asp-for="Gender"></label>
+            <select class="form-select w-100" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()">
+                <option value="" disabled aria-disabled="True">Choose one</option>
+            </select>
+            <span class="text-danger" asp-validation-for="Gender"></span>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12 col-md-6">
+            <label class="form-label" asp-for="Address"></label>
+            <textarea class="form-control w-100" rows="3" asp-for="Address" style="max-width: 100%"></textarea>
+            <span class="text-danger" asp-validation-for="Address"></span>
+        </div>
+        <div class="col-12 col-md-6">
+            <label class="form-label" asp-for="Dob"></label>
+            <input class="form-control" asp-for="Dob" type="date" />
+            <span class="text-danger" asp-validation-for="Gender"></span>
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <button class="btn btn-primary" value="bio" name="UpdateType">Save Changes</button>
+    </div>
+</form>

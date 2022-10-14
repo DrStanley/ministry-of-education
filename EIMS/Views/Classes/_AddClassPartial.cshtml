@@ -1,0 +1,41 @@
+﻿
+
+<div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Add Class</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="Add" asp-controller="Classes">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <input type="text" class="col-md-6 form-control" name="classView" id="ClassName" placeholder="Class Name" required />
+                        <select class="col-md-6 form-select mt-2" name ="classType" asp-items="Html.GetEnumSelectList<ClassType>()" required>
+                            <option selected="selected" value="" disabled>Please Class Type</option>
+                        </select>
+                        <p class="text-danger">@ViewBag.Error</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-lg btn-primary" onclick="validate()">Add</button>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<script>
+    function validate() {
+        var classView = $('#ClassName').val();
+
+        if (className.trim() == "" || className.trim() == '') {
+            return false;
+        }
+        return true;
+    }
+
+</script>

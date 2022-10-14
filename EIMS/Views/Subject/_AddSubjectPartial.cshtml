@@ -1,0 +1,40 @@
+﻿<div class="modal fade" id="myModalS" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Add Subject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="Add" asp-controller="Subject">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <p class="text-danger">@ViewBag.Error</p>
+
+                        <input type="text" class="col-md-6 form-control" name="subjectView" id="SubjectName" placeholder="Subject Name" required />
+                        <select class="col-md-6 form-control mt-2" name="subjectLevel" asp-items="Html.GetEnumSelectList<SchoolCategory>()" required>
+                            <option selected="selected" value="" disabled>Please Subject Level</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-lg btn-primary" onclick="validate()">Add</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function validate() {
+        var classView = $('#SubjectName').val();
+
+        if (className.trim() === "" || className.trim() === '') {
+            return false;
+        }
+        return true;
+    }
+
+</script>

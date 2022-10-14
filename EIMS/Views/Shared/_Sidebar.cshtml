@@ -1,0 +1,61 @@
+﻿<!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+
+    <!-- LOGO -->
+    <div class="navbar-brand-box">
+        <a asp-action="Index" asp-controller="Home" class="logo logo-dark">
+            <span class="logo-sm">
+                <img src="~/images/logo-sm.png" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="~/images/logo-dark.png" alt="" height="20">
+            </span>
+        </a>
+
+        <a href="index-2.html" class="logo logo-light">
+            <span class="logo-sm">
+                <i class="fa fa-school"></i>
+            </span>
+            <span class="logo-lg">
+                <img src="~/images/logo-light.png" alt="" height="20">
+            </span>
+        </a>
+    </div>
+
+    <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
+        <i class="fa fa-fw fa-bars"></i>
+    </button>
+
+    <div data-simplebar class="sidebar-menu-scroll">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+                <li class="menu-title">Menu</li>
+
+                <li>
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="uil-home-alt"></i><span class="badge rounded-pill bg-primary float-end">01</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <partial name="_AdminSidebar"/>
+                }
+                @if (User.IsInRole("SchoolAdmin"))
+                {
+                    <partial name="_SchoolAdminSidebar"/>
+                }
+                @if (User.IsInRole("Inspector"))
+                {
+                    <partial name="_InspectorSideBar"/>
+                }
+            </ul>
+        </div>
+        <!-- Sidebar -->
+    </div>
+</div>
+<!-- Left Sidebar End -->

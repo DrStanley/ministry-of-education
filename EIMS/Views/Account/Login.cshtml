@@ -1,0 +1,63 @@
+﻿@model LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "_AccountLayout";
+}
+
+<div class="col-md-8 col-lg-6 col-xl-5">
+    <div class="card">
+
+        <div class="card-body p-5">
+            <div class="text-center">
+                <h2 class="text-primary">LOGIN</h2>
+            </div>
+            <div class="p-2 mt-4">
+
+                <form action="@Url.Action("Login")" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="UserName" for="Username"></label>
+                        <input type="text" class="form-control" asp-for="UserName" id="Username" placeholder="Enter Username" required>
+                    </div>
+
+                    <div class="mb-3">
+                        @*   <div class="float-end">
+                            <a href="auth-recoverpw.html" class="text-muted">Forgot password?</a>
+                        </div>*@
+                        <label class="form-label" asp-for="Password">Password</label>
+                        <input type="password" asp-for="Password" class="form-control" id="Password" placeholder="Enter password" required>
+                    </div>
+
+                    @*  <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="auth-remember-check">
+                        <label class="form-check-label" for="auth-remember-check">Remember me</label>
+                    </div>*@
+
+                    <div class="text-end">
+                        <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Log In</button>
+                    </div>
+                    @* <div class="mt-4 text-center">
+                            <p class="mb-0">
+                                Don't have an account ?
+                                <a href="#" class="fw-medium text-primary"> Signup now </a>
+                            </p>
+                        </div>*@
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mt-5 text-center">
+        <p>
+            <script>document.write(new Date().getFullYear())</script> © Tenece Professional Service
+        </p>
+    </div>
+
+</div>
+
+
+@section Scripts{ 
+    @await Html.PartialAsync("_ValidationScripts")
+}

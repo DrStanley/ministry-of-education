@@ -1,0 +1,66 @@
+﻿@model AddSubjectsViewModel
+@{
+    ViewBag.Title = $"Add subjects to {Model.ExaminationName}";
+}
+
+
+<section class="container-fluid">
+    <!--<header class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0">@ViewBag.Title</h4>-->
+
+                @*  <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+                            <li class="breadcrumb-item active">Basic Elements</li>
+                        </ol>
+                    </div>*@
+
+            <!--</div>
+        </div>
+    </header>-->
+
+    <div class="row">
+        <div class="col-lg-12 mx-lg-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-lg-11 mx-lg-auto">
+                            <div class="mt-4">
+                                <form method="post" asp-action="AddExamSubjects">
+                                    @Html.AntiForgeryToken()
+                                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                    <input type="hidden" asp-for="ExamId"/>
+
+                                    @*<div class="row">
+                                        <select class="form-select" asp-items="Model.Subjects" asp-for="SelectedSubjects" multiple="multiple"></select>
+                                    </div>*@
+                                    @for (int i = 0; i < Model.Subjects.Count; i++)
+                                    {
+                                        <div class="form-check my-1">
+                                            <input type="hidden" asp-for="@Model.Subjects[i].Id" />
+                                            <input type="hidden" asp-for="@Model.Subjects[i].SubjectName" />
+                                            <label class="form-check-label" asp-for="@Model.Subjects[i].Id">
+                                            <input asp-for="@Model.Subjects[i].IsAdded" class="form-check-input"/>
+                                            @Model.Subjects[i].SubjectName</label>
+                                        </div>
+                                    }
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary w-md">Add Subjects</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<partial name="_ValidationScripts" />

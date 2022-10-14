@@ -1,0 +1,106 @@
+﻿@using System.Linq
+@model CreateInspectorViewModel
+
+@{
+    ViewBag.Title = "Edit Inspector";
+}
+
+<section class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 mx-lg-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-12 mx-lg-auto">
+                            <div class="mt-4">
+
+                                <form method="post" asp-action="EditInspector" asp-controller="Inspector">
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <label class="form-label pt-2" asp-for="Title"></label>
+                                                </div>
+                                                <div class="col-lg-6 mb-2">
+                                                    <input type="text" class="form-control" asp-for="Title" />
+                                                </div>
+                                                <span class="text-danger text-center" asp-validation-for="Title"></span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <label class="form-label pt-2" asp-for="Name"></label>
+                                                </div>
+                                                <div class="col-lg-6 mb-2">
+                                                    <input type="text" class="form-control" asp-for="Name" />
+                                                </div>
+                                                <span class="text-danger text-center" asp-validation-for="Name"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <label class="form-label pt-2" asp-for="Email"></label>
+                                                </div>
+                                                <div class="col-lg-6 mb-2">
+                                                    <input type="text" class="form-control" readonly asp-for="Email" />
+                                                </div>
+                                                <span class="text-danger text-center" asp-validation-for="Email"></span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <label class="form-label pt-2" asp-for="PhoneNumber"></label>
+                                                </div>
+                                                <div class="col-lg-6 mb-2">
+                                                    <input type="text" class="form-control" asp-for="PhoneNumber" />
+                                                </div>
+                                                <span class="text-danger text-center" asp-validation-for="PhoneNumber"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <label class="form-label pt-2" asp-for="LocalGovernmentId"></label>
+                                                </div>
+                                                <div class="col-lg-6 mb-2">
+                                                    <input type="text" class="form-control" readonly value="@Model.LocalGovernments.FirstOrDefault(l=>l.Id==Model.LocalGovernmentId).Name" />
+                                                </div>
+                                                <span class="text-danger" asp-validation-for="LocalGovernmentId"></span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary w-md">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

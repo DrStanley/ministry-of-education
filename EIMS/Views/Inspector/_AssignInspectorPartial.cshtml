@@ -1,0 +1,45 @@
+﻿@model InspectorViewModel
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">Assign Inspector</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+    </div>
+    <div class="modal-body">
+        <form method="post" asp-action="AssignInspector" asp-controller="Inspector">
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <input type="hidden" name="Id" class="col-md-6 form-control" asp-for="Id" value=@Model.Id />
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label pt-2" asp-for="Name"></label>
+                    </div>
+                    <div class="col-lg-6 mb-2">
+                        <input type="text" name="Name" required class="col-md-6 form-control" readonly asp-for="Name" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="LocalGovernmentId"></span>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label class="form-label pt-2" asp-for="LocalGovernmentId"></label>
+                    </div>
+                    <div class="col-lg-6 mb-2">
+                        <select id="LocalGovernmentId" class="form-select" required asp-for="LocalGovernmentId" asp-items="@(new SelectList(ViewBag.Lga, "Id", "Name"))">
+                            <option selected="selected" value="" disabled aria-disabled="True">Please select LGA</option>
+                        </select>
+                    </div>
+                    <span class="text-danger" asp-validation-for="LocalGovernmentId"></span>
+
+                </div>
+                <p class="text-danger">@ViewBag.Error</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-lg btn-primary" onclick="validate()">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+</div>

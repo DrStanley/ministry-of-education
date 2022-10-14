@@ -1,0 +1,91 @@
+﻿@model AssignTeacherViewModel
+@{
+    ViewData["Title"] = "Assign";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="row">
+        <div class="col-md-12 mx-lg-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Assign A Teacher</h5>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-lg-11 mx-lg-auto">
+                            <div class="mt-4">
+                                <form method="post" action="AssignTeacher">
+                                    <h3 class="text-danger">@TempData["AssignError"]</h3>
+                                    @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <input type="hidden" asp-for="Id">
+
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="Name"></label>
+                                                <input type="text" asp-for="Name" class="form-control" readonly id="formrow-firstname-input">
+                                                <span class="text-danger" asp-validation-for="Name"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="Email"></label>
+                                                <input type="email" class="form-control" readonly id="formrow-firstname-input" asp-for="Email">
+                                                <span class="text-danger" asp-validation-for="Email"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="LocalGovernmentId"></label>
+                                                <select class="form-select" id="LocalGovernmentId" onchange="fnSubmit()" asp-for="LocalGovernmentId" asp-items="@(new SelectList(Model.LocalGovernments, "Id", "Name"))">
+                                                    <option selected="selected" value="" disabled aria-disabled="True">Please select LGA</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" asp-for="SchoolId"></label>
+                                                <select class="form-select" id="School" onchange="Check()" asp-for="SchoolId">
+                                                    <option selected="selected" value="" disabled aria-disabled="True">Please select School</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-lg mb-3 "><b>Assign</b></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    $(document).ready(function () { $("#School").prop("disabled", true); });
+    function fnSubmit() {
+        var LocalGovernmentId = $("#LocalGovernmentId").val();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("GetSchoolsByLga", "Teacher")',
+                data: { "id": LocalGovernmentId },
+                success: function (json, textStatus) {
+                    $("#School").empty();
+                    $("#School").append('<option value="' + 0 + '"> Please select School</option>');
+                    json = json || {};
+                    for (var i = 0; i < json.length; i++) {
+                        $("#School").append('<option value="' + json[i].id + '">' + json[i].schoolName + '</option>');
+                    }
+                    $("#School").prop("disabled", false);
+                },
+                error: function () {
+                    alert("No School Found");
+                }
+        });
+      
+    }
+</script>

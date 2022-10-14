@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ClassViewModel>
+@{
+    var count = 0;
+}
+<div class="table-responsive">
+    <table id="classes_tablePri" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>Class Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @{
+                if (Model.Any())
+                {
+                    foreach (var classView in Model.Where(c => c.ClassType == ClassType.PRIMARY))
+                    {
+
+                        <tr>
+                            <td>@(++count)</td>
+                            <td>@classView.ClassName</td>
+                            <td>@classView.ClassType.ToString()</td>
+                            <td>
+                                <div class='dropdown dropstart'>
+                                    <button class='btn btn-light btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                        <i class='uil uil-ellipsis-v'></i>
+                                    </button>
+                                    <div class='dropdown-menu'>
+                                        <a class='dropdown-item text-primary' data-id=@classView.Id data-toggle="modal" id="editBtn" data-bs-toggle="modal" data-target="#EditModal" data-bs-target="#EditModal">
+                                            <i class='uil uil-pen'></i> EDIT
+                                        </a>
+                                        <a class='dropdown-item text-danger' href='@Url.Action("DeleteClass", new {id = classView.Id})'><i class='uil uil-trash-alt'></i> DELETE</a>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+
+                }
+            }
+
+        </tbody>
+
+    </table>
+</div>
+

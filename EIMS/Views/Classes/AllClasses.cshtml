@@ -1,0 +1,118 @@
+﻿@model IEnumerable<ClassViewModel>
+@{
+    ViewBag.Title = "Class";
+    var count = 0;
+}
+
+@section Styles
+{
+    <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
+
+<section class="container-fluid">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">@ViewBag.Title Table</h4>
+                    <a class="btn btn-primary" data-toggle="modal" data-bs-toggle="modal" data-target="#myModal" data-bs-target="#myModal"><b>Add New Class</b></a>
+                </div>
+                <div class="card-body">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#profile1" role="tab" id="pub">
+                                <span class="d-none d-sm-block">Primary Classes</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#qualifications" role="tab" id="pri">
+                                <span class="d-none d-sm-block">Secondary Classes</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content p-3 text-muted">
+                        
+                        <!--Public School tab-->
+                        <div class="tab-pane active" id="profile1" role="tabpanel">
+                            <div class="mb-0">
+                                <partial name="_PrimaryClass" model="Model" />
+                            </div>
+                        </div>
+
+                        <!--Private School tab-->
+                        <div class="tab-pane" id="qualifications" role="tabpanel">
+                            <div class="mb-0">
+                                <partial name="_SecodaryClass" model="Model" />
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+</section>
+@await Html.PartialAsync("_AddClassPartial")
+<div class="modal fade" id="EditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="editClass" role="document">
+
+
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#classes_tableSec").DataTable({
+                "processing": true, // for show progress bar
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+            });
+
+            $("#classes_tablePri").DataTable({
+                "processing": true, // for show progress bar
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+            });
+
+
+            console.clear();
+            var hash = location.hash;
+            if (hash) {
+                var otherTab = document.getElementById("profile1");
+                var otherLink = document.getElementById("pub");
+                otherTab.classList.remove("active");
+                otherLink.classList.remove("active");
+                var targetTab = document.querySelector(hash);
+                var targetLink = document.querySelector(hash);
+                targetTab.classList.add("active");
+                targetLink.classList.add("active");
+                console.log(targetTab);
+            }
+
+            $('table #editBtn').on('click',
+                function () {
+                    var id = $(this).data("id");
+                    $.get(`/Classes/GetClass/${id}`,
+                        function (res) {
+                            $("#editClass").html(res);
+                        });
+                });
+
+        });
+    </script>
+}

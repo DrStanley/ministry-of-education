@@ -1,0 +1,116 @@
+﻿@model IEnumerable<TeacherViewModel>
+@{
+    ViewBag.Title = "Teachers";
+    var count = 0;
+}
+
+@section Styles
+{
+    <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+    <!-- Responsive datatable examples -->
+    <link href="~/lib/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+}
+
+<section class="container-fluid">
+   
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">@ViewBag.Title Table</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="teacher_table" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">S/N</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Engagement</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+
+                                @foreach (var teacher in Model)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            <span class="w-100 text-center">@(++count)</span>
+                                        </td>
+                                        <td>
+                                            <span>@teacher.Name</span>
+                                        </td>
+                                        <td>@teacher.Email</td>
+                                        <td>
+                                            <div class="badge bg-pill @(teacher.IsAssigned ? "bg-soft-purple" : "bg-soft-warning") font-size-12">
+                                                @(teacher.IsAssigned ? "Assigned" : "Unassigned")
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="badge bg-pill @(teacher.Status == Status.Active ? "bg-soft-success" : "bg-soft-danger") font-size-12">@teacher.Status</div>
+                                        </td>
+                                        <td>
+                                            <div class='dropdown dropstart'>
+                                                <button class='btn btn-light btn-sm dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                                    <i class='uil uil-ellipsis-v'></i>
+                                                </button>
+                                                <div class='dropdown-menu'>
+                                                    @{
+                                                        <a class='dropdown-item text-primary' href='@Url.Action("EditTeacher", new {id = teacher.Id})'><i class='uil uil-pen'></i> Edit</a>
+
+                                                        if (teacher.IsAssigned)
+                                                        {
+                                                            <a class='dropdown-item text-primary' href='@Url.Action("TransferTeacher", new {id = teacher.Id})'><i class='uil uil-align-center-h'></i> Transfer Teacher</a>
+                                                            <a class='dropdown-item text-primary' href='@Url.Action("UnassignTeacher", new {id = teacher.Id})'><i class='uil uil-arrow-circle-down'></i> Unassign Teacher</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class='dropdown-item text-primary' href='@Url.Action("AssignTeacher", new {id = teacher.Id})'><i class='uil uil-arrow-circle-up'></i> Assign Teacher</a>
+
+                                                        }
+                                                    }
+                                                    <a class='dropdown-item text-warning' href='@Url.Action("ChangeTeacherStatus", new {id = teacher.Id})'><i class='uil uil-unlock'></i> @(teacher.Status == Status.Active ? "Deactivate" : "Activate")</a>
+                                                    <a class='dropdown-item text-danger' href='@Url.Action("DeleteTeacher", new {id = teacher.Id})'><i class='uil uil-trash-alt'></i> Delete teacher</a>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div> <!-- end col -->
+            </div> <!-- end col -->
+        </div> <!-- end col -->
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Responsive examples -->
+    <script src="~/lib/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#teacher_table").DataTable({
+                "processing": true, // for show progress bar
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+            });
+        });
+    </script>
+}
